@@ -48,8 +48,14 @@ For the tests in this lab to work, please run the following two cells.
 
 
 ```python
-pip install ipython_unittest
+!pip install ipython_unittest
 ```
+
+    Collecting ipython_unittest
+      Downloading ipython_unittest-0.3.1-py2.py3-none-any.whl
+    Installing collected packages: ipython-unittest
+    Successfully installed ipython-unittest-0.3.1
+
 
 
 ```python
@@ -142,7 +148,7 @@ countries
 %%unittest_testcase
 
 def test_countries(self):
-    self.assertEqual(countries, ['Croatia', 'USA', 'Argentina', 'Mexico', 'USA', 'Morocco', 'New Mexico', 'Finland', 'Argentina', 'Italy',  'Canada', 'South Korea',  'Malta',  'Thailand'])
+    self.assertItemsEqual(countries, ['Croatia', 'USA', 'Argentina', 'Mexico', 'USA', 'Morocco', 'New Mexico', 'Finland', 'Argentina', 'Italy',  'Canada', 'South Korea',  'Malta',  'Thailand'])
 ```
 
 You may have noticed that "New Mexico" is included in our list of countries.  That doesn't seem right.  Let's change 'New Mexico' to 'USA'.
@@ -164,7 +170,7 @@ countries
 %%unittest_testcase
 
 def test_countries_with_usa(self):
-    self.assertEqual(countries, ['Croatia', 'USA', 'Argentina', 'Mexico', 'USA', 'Morocco', 'USA', 'Finland', 'Argentina', 'Italy',  'Canada', 'South Korea',  'Malta',  'Thailand'])
+    self.assertNotIn('New Mexico', countries)
 ```
 
 Finally, let's remove Thailand from the list.  No good reason, we're acting on whimsy.
@@ -191,11 +197,30 @@ countries
 ```
 
 
+
+
+    ['Croatia',
+     'USA',
+     'Argentina',
+     'Mexico',
+     'USA',
+     'Morocco',
+     'USA',
+     'Finland',
+     'Argentina',
+     'Italy',
+     'Canada',
+     'South Korea',
+     'Malta']
+
+
+
+
 ```python
 %%unittest_testcase
 
 def test_countries_with_usa(self):
-    self.assertEqual(countries, ['Croatia', 'USA', 'Argentina', 'Mexico', 'USA', 'Morocco', 'USA', 'Finland', 'Argentina', 'Italy',  'Canada', 'South Korea',  'Malta'])
+    self.assertNotIn('Thailand', countries)
 ```
 
 ### Exploring Lists with Methods
@@ -211,8 +236,8 @@ unique_countries = None
 
 
 ```python
-unique_countries # ['USA',  'South Korea',  'Morocco',  'Finland',  'Italy', 
-# 'Mexico',  'Argentina', 'Malta', 'Croatia', 'New Mexico', 'Canada']
+unique_countries # ['Canada', 'Italy', 'USA', 'Mexico', 'Finland', 
+#'Malta', 'Morocco', 'Croatia', 'Argentina', 'South Korea']
 ```
 
 
@@ -220,7 +245,7 @@ unique_countries # ['USA',  'South Korea',  'Morocco',  'Finland',  'Italy',
 %%unittest_testcase
 
 def test_unique_countries(self):
-    self.assertEqual(unique_countries, ['USA',  'South Korea',  'Morocco',  'Finland',  'Italy', 'Mexico',  'Argentina', 'Malta', 'Croatia', 'New Mexico', 'Canada'])
+    self.assertItemsEqual(unique_countries, ['USA',  'South Korea',  'Morocco',  'Finland',  'Italy', 'Mexico',  'Argentina', 'Malta', 'Croatia', 'Canada'])
 ```
 
 Now the number of repeat countries should be the number of countries minus the number of unique countries.  So use the `len` function on both `unique_countries` and `countries` to calculate this and assign the result to the variable `num_of_repeats`.
